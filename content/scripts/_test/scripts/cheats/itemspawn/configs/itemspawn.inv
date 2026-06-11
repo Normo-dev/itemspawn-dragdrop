@@ -1,0 +1,7 @@
+// Scratch inventory backing the ::~item results interface (spawn_main:items).
+// The engine fills it with the matching items (1 of each) for display; clicking
+// a cell spawns into the player's real inventory. Server-side only, never saved.
+[dev_itemsearch]
+scope=temp
+size=240
+stackall=yes

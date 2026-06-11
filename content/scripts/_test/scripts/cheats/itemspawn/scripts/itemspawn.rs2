@@ -1,0 +1,58 @@
+// Opens the custom dev item spawn search interface.
+// Usage: ::~item <name|id> [--members|-m] [--free|-f] [--trade|--tradeable|-t] [--untrade|--untradeable|-u] [--wear|--wearable|-w] [--stack|--stackable|-s] [--note|--noted|-n] [--cert]
+[debugproc,item](string $query)
+itemspawn_open($query);
+
+[if_button,spawn_main:prev]
+itemspawn_page(-1);
+
+[if_button,spawn_main:next]
+itemspawn_page(1);
+
+[inv_button1,spawn_main:items]
+~itemspawn_spawn(last_item, ^false, null);
+
+[inv_button2,spawn_main:items]
+~itemspawn_spawn(last_item, ^true, null);
+
+[inv_button3,spawn_main:items]
+~itemspawn_spawn(last_item, ^false, 1);
+
+[inv_button4,spawn_main:items]
+~itemspawn_spawn(last_item, ^false, 100);
+
+[inv_button5,spawn_main:items]
+~itemspawn_info(last_item);
+
+[proc,itemspawn_spawn](obj $obj, boolean $noted, int $amount)
+def_obj $spawn = $obj;
+
+if ($noted = ^true) {
+    $spawn = oc_cert($obj);
+    if ($spawn = $obj) {
+        mes("<oc_name($obj)> has no noted version.");
+        return;
+    }
+}
+
+if ($amount = null) {
+    p_countdialog;
+    if (last_int <= 0) {
+        return;
+    }
+
+    $amount = last_int;
+}
+
+itemspawn_add($spawn, $amount);
+
+if ($noted = ^true) {
+    mes("Spawned <tostring($amount)> x <oc_name($obj)> (noted).");
+} else {
+    mes("Spawned <tostring($amount)> x <oc_name($obj)>.");
+}
+
+[proc,itemspawn_info](obj $obj)
+mes("<oc_name($obj)> (<oc_debugname($obj)>)");
+mes("cost <tostring(oc_cost($obj))>, weight <tostring(oc_weight($obj))>");
+mes(oc_desc($obj));
