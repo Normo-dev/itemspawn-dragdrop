@@ -4,13 +4,13 @@ This folder is a file overlay for the `::~item` item spawn results interface.
 
 ## Install
 
-1. Drag the `content` and `engine` folders into your Server2004 root folder.
+1. Drag the `content` and `engine` folders into your 274 rev Lost City project root folder.
 2. When OS asks, choose to merge folders and replace files.
 3. Rebuild scripts/cache:
 
 ```powershell
 cd engine
-npm.cmd run build
+$env:BUILD_VERIFY='false'; npm.cmd run build
 cd ..
 ```
 
